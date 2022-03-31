@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Web Audio Test</title>
+</head>
+<body>
+    <div><label for="freq">周波数</label><input type="range" id="freq" min="220" max="14080" value="880"><span><input type="number" id="freqOut" value="880">Hz</span></div>
+    <div><label for="volume">音量</label><input type="range" id="volume" min="0" max="255" value="100"><span><input type="number" id="volumeOut" value="100"></span></div>
+    <div><button id="start">開始</button></div>
+    <div id="log"></div>
+    <script src="app.js"></script>
+</body>
+</html>
