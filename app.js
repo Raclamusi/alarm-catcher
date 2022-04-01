@@ -4,7 +4,10 @@ const freqRange = document.getElementById("freq");
 const volumeRange = document.getElementById("volume");
 const freqInput = document.getElementById("freqOut");
 const volumeInput = document.getElementById("volumeOut");
+const messageInput = document.getElementById("message");
 const startButton = document.getElementById("start");
+const volumeBar = document.getElementById("volumeBar");
+const volumeThreshold = document.getElementById("volumeThreshold");
 const log = document.getElementById("log");
 
 freqRange.addEventListener("input", () => {
@@ -12,12 +15,14 @@ freqRange.addEventListener("input", () => {
 });
 volumeRange.addEventListener("input", () => {
     volumeInput.value = volumeRange.value;
+    volumeThreshold.style.left = volumeRange.value + "px";
 });
 freqInput.addEventListener("input", () => {
     freqRange.value = freqInput.value;
 });
 volumeInput.addEventListener("input", () => {
     volumeRange.value = volumeInput.value;
+    volumeThreshold.style.left = volumeRange.value + "px";
 });
 
 startButton.addEventListener("click", async () => {
@@ -44,8 +49,6 @@ startButton.addEventListener("click", async () => {
         const freqStart = 220;
         const waveData = new Uint8Array(analyser.fftSize);
         const freqData = new Uint8Array(analyser.frequencyBinCount);
-        const uttr = new SpeechSynthesisUtterance();
-        uttr.text = "アラームを検出しました";
         let speaking = false;
         const update = () => {
             analyser.getByteTimeDomainData(waveData);
@@ -54,10 +57,13 @@ startButton.addEventListener("click", async () => {
             const freq = (f + freqStart) * 24000 / analyser.frequencyBinCount;
             console.log(`volume: ${volume}, freq: ${freq}`);
             log.textContent = `volume: ${volume}, freq: ${freq}`;
+            volumeBar.style.width = Math.abs(freq - parseInt(freqRange.value)) <= 15 ? volume + "px" : "0";
 
             if (volume >= parseInt(volumeRange.value) && Math.abs(freq - parseInt(freqRange.value)) <= 15) {
                 if (!speaking) {
                     speaking = true;
+                    const uttr = new SpeechSynthesisUtterance();
+                    uttr.text = messageInput.value;
                     speechSynthesis.speak(uttr);
                     document.body.style.backgroundColor = "red";
                 }

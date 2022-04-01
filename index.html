@@ -8,7 +8,9 @@
 <body>
     <div><label for="freq">周波数</label><input type="range" id="freq" min="220" max="14080" value="880"><span><input type="number" id="freqOut" value="880">Hz</span></div>
     <div><label for="volume">音量</label><input type="range" id="volume" min="0" max="255" value="100"><span><input type="number" id="volumeOut" value="100"></span></div>
+    <div><label for="message">読み上げメッセージ</label><input type="text" id="message" value="アラームが検出されました"></div>
     <div><button id="start">開始</button></div>
+    <div style="position: relative; width: 256px; height: 30px; border: 3px solid black;"><div id="volumeBar" style="position: absolute; left: 0; top: 5px; height: 20px; background-color: blue;"></div><div id="volumeThreshold" style="position: absolute; left: 100px; top: 0; width: 1px; height: 100%; background-color: black;"></div></div>
     <div id="log"></div>
     <script src="app.js"></script>
 </body>
